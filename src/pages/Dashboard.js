@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react'
 import Card from '../components/Card'
+import List from '../components/List'
 
 const Dashboard = () => {
-    useEffect(() => {
-        getData();
-    }, [])
+    const [metaData, setMetaData] = useState({
+        totalPost: '',
+        totalPages: '',
+        totalAuthors: '',
+        totalTags: '',
+        latestPost: ''
+    });
 
 
     async function getData() {
@@ -26,14 +31,9 @@ const Dashboard = () => {
         }));
     }
 
-
-    const [metaData, setMetaData] = useState({
-        totalPost: '',
-        totalPages: '',
-        totalAuthors: '',
-        totalTags: '',
-        latestPost: ''
-    });
+    useEffect(() => {
+        getData();
+    }, [])
 
     return (
         <div className="wrapper">
@@ -54,15 +54,7 @@ const Dashboard = () => {
             </div>
             <div className="grid-container-2 mt-3">
                 <div className="grid-item">
-                    <div>
-                        <h4>Latest 5 Published posts List</h4>
-                        {
-                            metaData.latestPost.length >= 1 &&
-                            metaData.latestPost.map((obj, id) => (
-                                <a key={id} rel="noreferrer" href={obj.url} target="_blank"><p className="mb-1">{obj.title}</p></a>
-                            ))
-                        }
-                    </div>
+                    <List title="Latest 5 Published posts List" data={metaData.latestPost} />
                 </div>
                 <div className="grid-item">
                     <div>

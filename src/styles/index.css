@@ -55,3 +55,11 @@ code {
   border: 1px solid rgba(0, 0, 0, 0.8);
   padding: 15px;
 }
+
+@media(max-width:700px) {
+
+  .grid-container-2,
+  .grid-container-4 {
+    grid-template-columns: auto;
+  }
+}
