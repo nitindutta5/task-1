@@ -1,4 +1,4 @@
-const Link = () => {
+const Links = () => {
     return (
         <div className="wrapper">
             <h1>Link</h1>
@@ -7,4 +7,4 @@ const Link = () => {
     )
 }
 
-export default Link
+export default Links
