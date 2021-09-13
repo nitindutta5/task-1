@@ -1,5 +1,5 @@
+import React, { useEffect } from "react";
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
     Link,
@@ -12,31 +12,29 @@ import styles from './styles/SideNav.module.css'
 
 
 const Layout = () => {
-
+    let location = useLocation();
+    console.log(location)
     return (
         <>
-            <Router>
-                <div className={styles.sidebar}>
-                    <Link className={styles.active} to="/">Dashboard</Link>
-                    <Link to="/posts">Posts</Link>
-                    <Link to="/links">Links</Link>
-                </div>
+            <div className={styles.sidebar}>
+                <Link className={location.pathname === "/" ? styles.active : ''} to="/">Dashboard</Link>
+                <Link className={location.pathname === "/posts" ? styles.active : ''} to="/posts">Posts</Link>
+                <Link className={location.pathname === "/links" ? styles.active : ''} to="/links">Links</Link>
+            </div>
 
-                <div className={styles.content}>
-                    <Switch>
-                        <Route path="/" exact>
-                            <Dashboard />
-                        </Route>
-                        <Route path="/links">
-                            <Links />
-                        </Route>
-                        <Route path="/posts">
-                            <Posts />
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-
+            <div className={styles.content}>
+                <Switch>
+                    <Route path="/" exact>
+                        <Dashboard />
+                    </Route>
+                    <Route path="/links">
+                        <Links />
+                    </Route>
+                    <Route path="/posts">
+                        <Posts />
+                    </Route>
+                </Switch>
+            </div>
         </>
     )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Card from '../components/Card'
+
 
 const Link = () => {
     const [metaData, setMetaData] = useState({
