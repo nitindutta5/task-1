@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
     Switch,
     Route,
@@ -13,7 +13,6 @@ import styles from './styles/SideNav.module.css'
 
 const Layout = () => {
     let location = useLocation();
-    console.log(location)
     return (
         <>
             <div className={styles.sidebar}>
@@ -21,7 +20,6 @@ const Layout = () => {
                 <Link className={location.pathname === "/posts" ? styles.active : ''} to="/posts">Posts</Link>
                 <Link className={location.pathname === "/links" ? styles.active : ''} to="/links">Links</Link>
             </div>
-
             <div className={styles.content}>
                 <Switch>
                     <Route path="/" exact>

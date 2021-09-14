@@ -22,7 +22,7 @@ const Dashboard = () => {
         const data = await response1.json();
         const data2 = await response2.json();
         const data3 = await response3.json();
-        console.log(data);
+
         setMetaData(prevState => ({
             ...prevState,
             totalPost: data.meta.pagination.total,
@@ -34,24 +34,41 @@ const Dashboard = () => {
         }));
     }
 
+    // For finding out the unique key value from an array
+    const counts = {};
+    function countUnique(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            counts[arr[i]] = 1 + (counts[arr[i]] || 0);
+        }
+        return counts;
+    }
 
-    // function countUnique(arr) {
-    //     console.log(arr);
-    //     const counts = {};
-    //     for (var i = 0; i < arr.length; i++) {
-    //         counts[arr[i]] = 1 + (counts[arr[i]] || 0);
-    //     }
-    //     return counts;
-    // }
+    // For creating an array dataSet for chart data
+    let dataSet = [];
+    const createDataSet = () => {
+        for (let i = 1; i <= 12; i++) {
+            if (!(i in counts)) {
+                dataSet.push(0);
+            }
+            else {
+                dataSet.push(counts[i]);
+            }
+        }
+        return dataSet;
+    }
 
 
+    if (metaData.postDates) {
+        countUnique(metaData.postDates);
+        createDataSet();
+    }
 
 
     useEffect(() => {
         getData();
-
-        // countUnique(metaData.postDates);
     }, [])
+
+
 
 
 
@@ -79,40 +96,28 @@ const Dashboard = () => {
                 <div className="grid-item">
                     <div>
                         <h4>Posts per month</h4>
-                        <Bar
-                            data={{
-                                // Name of the variables on x-axies for each bar
-                                labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                                datasets: [
-                                    {
-                                        // Label for bars
-                                        label: "posts/month",
-                                        // Data or value of your each variable
-                                        data: [0, 0, 0, 0, 0, 6, 8, 0, 0, 0, 0, 0],
-                                    },
-                                ],
-                            }}
-                            // Height of graph
-                            height={100}
-                            options={{
-                                maintainAspectRatio: true,
-                                scales: {
-                                    yAxes: [
+                        {
+                            dataSet &&
+                            <Bar
+                                data={{
+                                    // Name of the variables on x-axies for each bar
+                                    labels: ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                                    datasets: [
                                         {
-                                            ticks: {
-                                                // The y-axis value will start from zero
-                                                beginAtZero: true,
-                                            },
+                                            // Label for bars
+                                            label: "posts/month",
+                                            // Data or value of your each variable
+                                            data: dataSet,
                                         },
                                     ],
-                                },
-                                legend: {
-                                    labels: {
-                                        fontSize: 15,
-                                    },
-                                },
-                            }}
-                        />
+                                }}
+                                // Height of graph
+                                height={100}
+                                options={{
+                                    maintainAspectRatio: true,
+                                }}
+                            />
+                        }
                     </div>
                 </div>
             </div>
